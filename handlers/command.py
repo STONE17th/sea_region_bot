@@ -23,7 +23,7 @@ async def command_start(message: Message, admin: bool, driver: bool, bot: Bot):
         keyboard = None
     else:
         message_text = 'Зарегистрируйтесь!'
-        keyboard = ikb_registration(message.from_user.id)
+        keyboard = ikb_registration()
     await message.answer(
         text=message_text,
         reply_markup=keyboard,

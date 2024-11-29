@@ -1,6 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from .callback_data import ConfirmRegistration, DataValue
+from .callback_data import ConfirmRegistration, Button
 
 
 def ikb_confirm_admin(user_tg_id: int, email: str, phone: str):
@@ -28,19 +28,18 @@ def ikb_confirm_admin(user_tg_id: int, email: str, phone: str):
     return keyboard.as_markup()
 
 
-def ikb_registration(driver_tg_id: int):
+def ikb_registration():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(
         text='Регистрация',
-        callback_data=DataValue(
+        callback_data=Button(
             button='driver_registration',
-            value=str(driver_tg_id),
         )
     )
     return keyboard.as_markup()
 
 
-def ikb_confirm_driver(driver_tg_id: int):
+def ikb_confirm_driver():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(
         text='Принять',
@@ -51,29 +50,32 @@ def ikb_confirm_driver(driver_tg_id: int):
     )
     keyboard.button(
         text='Назад',
-        callback_data=DataValue(
-            button='registration_back',
-            value=str(driver_tg_id),
+        callback_data=Button(
+            button='driver_registration_back',
         )
 
     )
     keyboard.button(
         text='Отмена',
-        callback_data=DataValue(
+        callback_data=Button(
             button='cancel',
-            value=str(None),
         )
     )
     return keyboard.as_markup()
 
 
-def ikb_back_registration(driver_tg_id: int):
+def ikb_back_registration():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(
         text='Назад',
-        callback_data=DataValue(
-            button='registration_back',
-            value=str(driver_tg_id),
+        callback_data=Button(
+            button='driver_registration_back',
+        )
+    )
+    keyboard.button(
+        text='Отмена',
+        callback_data=Button(
+            button='cancel',
         )
     )
     return keyboard.as_markup()
@@ -83,9 +85,8 @@ def ikb_cancel():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(
         text='Отмена',
-        callback_data=DataValue(
+        callback_data=Button(
             button='cancel',
-            value=str(None),
         )
     )
     return keyboard.as_markup()

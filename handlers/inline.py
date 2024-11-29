@@ -6,6 +6,7 @@ from database import DataBase
 from keyboards import ikb_registration
 from keyboards.callback_data import ConfirmRegistration, DataValue
 from middleware.middleware import IsRegistered
+from fsm.states import DriverRegistration
 
 inline_router = Router()
 inline_router.callback_query.middleware(IsRegistered())
@@ -38,8 +39,8 @@ async def request_admin(callback: CallbackQuery, callback_data: ConfirmRegistrat
     )
 
 
-@inline_router.callback_query(DataValue.filter(F.button == 'cancel'))
-async def command_start(callback: CallbackQuery, state: FSMContext, admin: bool, driver: bool, bot: Bot):
+@inline_router.callback_query(DriverRegistration(), DataValue.filter(F.button == 'cancel'))
+async def main_menu(callback: CallbackQuery, state: FSMContext, admin: bool, driver: bool, bot: Bot):
     await state.clear()
     if admin:
         message_text = 'Вы админ!'
@@ -49,7 +50,7 @@ async def command_start(callback: CallbackQuery, state: FSMContext, admin: bool,
         keyboard = None
     else:
         message_text = 'Зарегистрируйтесь!'
-        keyboard = ikb_registration(callback.from_user.id)
+        keyboard = ikb_registration()
     await bot.edit_message_text(
         chat_id=callback.from_user.id,
         message_id=callback.message.message_id,

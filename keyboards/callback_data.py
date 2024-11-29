@@ -9,6 +9,10 @@ class ConfirmRegistration(CallbackData, prefix=''):
     phone: str | None = None
 
 
+class Button(CallbackData, prefix=''):
+    button: str
+
+
 class DataValue(CallbackData, prefix='DV'):
     button: str
     value: str
